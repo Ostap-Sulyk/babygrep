@@ -1,5 +1,3 @@
-#![allow(dead_code, unused_imports, unused_variables, unused_must_use)]
-
 use std::{env, error::Error, fs, process};
 
 fn run(config: Config) -> Result<(), Box<dyn Error>> {
@@ -35,5 +33,8 @@ fn main() {
 
     println!("Searching for {}", config.query);
     println!("In file {}", config.filename);
-    run(config);
+    if let Err(e) =  run(config){
+        println!("Application error: {}", e);
+        process::exit(1)
+    }
 }
