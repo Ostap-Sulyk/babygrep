@@ -1,18 +1,14 @@
-use babygrep::Config;
-use std::{env, process};
+#![allow(dead_code, unused_variables)]
+use std::{env, fs};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
+    let query = &args[1];
+    let filename = &args[2];
+    println!("Searching for: {}", &query);
+    println!("In file: {}", &filename);
 
-    let config = Config::new(&args).unwrap_or_else(|err| {
-        println!("\nProblem parsing arguments: {}", err);
+    let contents = fs::read_to_string(filename).expect("Error reading file");
 
-        process::exit(1);
-    });
-
-    if let Err(e) = babygrep::run(config) {
-        println!("Application error: {}", e);
-
-        process::exit(1)
-    }
+    println!("With contents: \n{}", contents);
 }
